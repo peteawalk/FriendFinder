@@ -1,12 +1,23 @@
 var express = require("express");
 var path = require("path");
 var mysql = require("mysql");
+var exphbs = require("express-handlebars");
 
 var app = express();
 // process.env.PORT lets the port be set by Heroku
 const port = process.env.PORT || 8080;
 
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json());
+app.use(express.static("public")); // static files go in public folder
 
+app.engine("handlebars", exphbs({
+    defaultLayout: "main"
+}));
+app.set("view engine", "handlebars");
 
 var connection = mysql.createConnection({
     host: "localhost",
