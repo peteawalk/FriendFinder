@@ -1,8 +1,7 @@
-var express = require("express");
-var path = require("path");
-var mysql = require("mysql");
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 
-var app = express();
 // process.env.PORT lets the port be set by Heroku
 const port = process.env.PORT || 8080;
 
@@ -10,24 +9,20 @@ const port = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+// create application/x-www-form-urlencoded parser;
+app.use(bodyParser.urlencoded({ extended: true }));
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "password",
-    database: "friend_finder_db"
-});
+// parse different custom JSON types as JSON
+app.use(bodyParser.json({ type: 'application/*+json' }));
 
-connection.connect(function (err) {
-    if (err) {
-        console.error("error connecting: " + err.stack);
-        return;
-    }
+// parse custome objects into buffer
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 
-    console.log("connected as id " + connection.threadId);
-});
+// parse an HTML body into a string
+app.use(bodyParser.text({ type: 'text/html' }));
 
-app.listen(port, () => console.log(`Server listening on http://localhost:${port}`))
+// Routing
+require("./app/routing/apiRoutes.js")(app);
+require("./app/routing/htmlRoutes.js")(app);
+
+app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));

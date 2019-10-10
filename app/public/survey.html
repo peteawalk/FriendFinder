@@ -6,7 +6,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -14,10 +15,10 @@
     <link rel href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
-    <div class="container">
-        <h2>FriendFinder Questions</h2>
-        <hr>
+<div class="container">
+    <h2>FriendFinder Questions</h2>
+    <hr>
+    <body></body>
         <h3><strong>About You</strong></h3>
         <h4>Name (Required)</h4>
         <input type="text" id="name" class="form-control" required>
@@ -28,8 +29,8 @@
         <hr>
 
         <h3><strong>Question 1</strong></h3>
-        <h4>You oftern wear Birkenstocks.</h4>
-        <select class="chosen-select" id="q1">
+        <h4>You often wear Birkenstocks.</h4>
+        <select class="chosen-select" id="q1" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -40,7 +41,7 @@
 
         <h3><strong>Question 2</strong></h3>
         <h4>You love to eat granola.</h4>
-        <select class="chosen-select" id="q2">
+        <select class="chosen-select" id="q2" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -52,7 +53,7 @@
 
         <h3><strong>Question 3</strong></h3>
         <h4>You enjoy hiking.</h4>
-        <select class="chosen-select" id="q3">
+        <select class="chosen-select" id="q3" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -63,7 +64,7 @@
 
         <h3><strong>Question 4</strong></h3>
         <h4>You know how to operate a table saw.</h4>
-        <select class="chosen-select" id="q4">
+        <select class="chosen-select" id="q4" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -74,7 +75,7 @@
 
         <h3><strong>Question 5</strong></h3>
         <h4>You like to go to the night club.</h4>
-        <select class="chosen-select" id="q5">
+        <select class="chosen-select" id="q5" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -85,7 +86,7 @@
 
         <h3><strong>Question 6</strong></h3>
         <h4>You appreciate designer fashion.</h4>
-        <select class="chosen-select" id="q6">
+        <select class="chosen-select" id="q6" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -96,7 +97,7 @@
 
         <h3><strong>Question 7</strong></h3>
         <h4>You know the difference between 80 grit and 220 grit sand paper.</h4>
-        <select class="chosen-select" id="q7">
+        <select class="chosen-select" id="q7" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -107,7 +108,7 @@
 
         <h3><strong>Question 8</strong></h3>
         <h4>You know how to chop wood.</h4>
-        <select class="chosen-select" id="q8">
+        <select class="chosen-select" id="q8" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -118,7 +119,7 @@
 
         <h3><strong>Question 9</strong></h3>
         <h4>You enjoy planning things.</h4>
-        <select class="chosen-select" id="q9">
+        <select class="chosen-select" id="q9" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -129,7 +130,7 @@
 
         <h3><strong>Question 10</strong></h3>
         <h4>You enjoy serving the public.</h4>
-        <select class="chosen-select" id="q10">
+        <select class="chosen-select" id="q10" data-placeholder="">
             <option value=""></option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -145,23 +146,116 @@
                 aria-hidden="true"></i>Submit</button>
 
         <br>
-        <br>
+        <hr>
         <footer>
-            Placeholder
+            <div class="container">
+                <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/peteawalk/FriendFinder">GitHub Repo</a></p>                
+            </div>
         </footer>
+
+    <div class="modal fade" id="results-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Match 🔥 </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2 id="match-name"></h2>
+                    <img class="img-responsive" id="match-photo" src="" alt="Your Match Here">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit" class="btn btn-secondary" data-dismiss="modal">Dismiss</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+        $("#submit").on("click", function() {
+            event.preventDefault();
+
+            function validateForm() {
+                var isValid = true;
+                $(".form-control").each(function() {
+
+                    if ($(this).val() === "") {
+                        isValid = false;
+                    }
+                })
+                return isValid;
+
+                $(".chosen-select").each(function () {
+                    if ($(this).val() === "") {
+                        isValid = false;
+                    }
+                });
+                return isValid;
+            };
+
+            if (validateForm()) {
+                var userData = {
+                    name: $("#name").val().trim(),
+                    photo: $("#photo").val().trim(),
+                    scores: [
+                        $("#q1").val(),
+                        $("#q2").val(),
+                        $("#q3").val(),
+                        $("#q4").val(),
+                        $("#q5").val(),
+                        $("#q6").val(),
+                        $("#q7").val(),
+                        $("#q8").val(),
+                        $("#q9").val(),
+                        $("#q10").val()
+                    ]
+                };
+
+                var currentURL = window.location.origin;
+
+            $.post(currentURL + "/api/friends", userData, function (data) {
+                    // Show modal with the best match
+                    $("#match-name").text(data.name);
+                    $("#match-photo").attr("src", data.photo);
+                    $("#results-modal").modal("show");
+                });
+
+            // Clear form data
+            $("#name").reset();
+            $("#photo").reset();
+            $("#q1").reset();
+            $("#q2").reset();
+            $("#q3").reset();
+            $("#q4").reset();
+            $("#q5").reset();
+            $("#q6").reset();
+            $("#q7").reset();
+            $("#q8").reset();
+            $("#q9").reset();
+            $("#q10").reset();
+
+            } else {
+                alert("Please fill out all fields before submitting!");
+            }
+            return false;
+
+        })
+
     </script>
 </body>
 
